@@ -10,8 +10,8 @@ const transporter = nodemailer.createTransport({
         refreshToken: process.env.REFRESH_TOKEN,
     },
     tls: {
-    rejectUnauthorized: false, // 👈 add this
-  },
+        rejectUnauthorized: false, // 👈 add this
+    },
 });
 
 // Verify the connection configuration

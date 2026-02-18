@@ -112,31 +112,31 @@ async function createTransaction(req, res) {
         const session = await mongoose.startSession()
         session.startTransaction()
 
-        transaction = (await transactionModel.create([ {
+        transaction = (await transactionModel.create([{
             fromAccount,
             toAccount,
             amount,
             idempotencyKey,
             status: "PENDING"
-        } ], { session }))[ 0 ]
+        }], { session }))[0]
 
-        const debitLedgerEntry = await ledgerModel.create([ {
+        const debitLedgerEntry = await ledgerModel.create([{
             account: fromAccount,
             amount: amount,
             transaction: transaction._id,
             type: "DEBIT"
-        } ], { session })
+        }], { session })
 
         await (() => {
             return new Promise((resolve) => setTimeout(resolve, 15 * 1000));
         })()
 
-        const creditLedgerEntry = await ledgerModel.create([ {
+        const creditLedgerEntry = await ledgerModel.create([{
             account: toAccount,
             amount: amount,
             transaction: transaction._id,
             type: "CREDIT"
-        } ], { session })
+        }], { session })
 
         await transactionModel.findOneAndUpdate(
             { _id: transaction._id },
@@ -207,19 +207,19 @@ async function createInitialFundsTransaction(req, res) {
         status: "PENDING"
     })
 
-    const debitLedgerEntry = await ledgerModel.create([ {
+    const debitLedgerEntry = await ledgerModel.create([{
         account: fromUserAccount._id,
         amount: amount,
         transaction: transaction._id,
         type: "DEBIT"
-    } ], { session })
+    }], { session })
 
-    const creditLedgerEntry = await ledgerModel.create([ {
+    const creditLedgerEntry = await ledgerModel.create([{
         account: toAccount,
         amount: amount,
         transaction: transaction._id,
         type: "CREDIT"
-    } ], { session })
+    }], { session })
 
     transaction.status = "COMPLETED"
     await transaction.save({ session })

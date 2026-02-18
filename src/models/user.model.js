@@ -21,19 +21,19 @@ const userSchema = new mongoose.Schema({
         minlength: [6, "Password must be at least 6 characters long"],
         select: false
     }
-}, { timestamps: true }); 
+}, { timestamps: true });
 
-userSchema.pre("save", async function(next){
-    if(!this.isModified("password")){
-        return ;
+userSchema.pre("save", async function (next) {
+    if (!this.isModified("password")) {
+        return;
     }
 
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
-    return ;
+    return;
 });
 
-userSchema.methods.comparePassword = async function(password){
+userSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 

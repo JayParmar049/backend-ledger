@@ -13,13 +13,13 @@ const mongoose = require("mongoose");
 
 function connectToDB() {
     mongoose.connect(process.env.MONGO_URI)
-    .then(()=>{
-        console.log("Database connected");
-    })
-    .catch((err)=>{
-        console.error(err);
-        process.exit(1);
-    })
+        .then(() => {
+            console.log("Database connected");
+        })
+        .catch((err) => {
+            console.error(err);
+            process.exit(1);
+        })
 }
 
 
