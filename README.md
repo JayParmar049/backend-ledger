@@ -174,4 +174,5 @@ Jay Parmar
 Full Stack Developer (MERN)
 
 🔗 Portfolio: https://my-portfolio-gamma-flax-25.vercel.app/
+
 🔗 LinkedIn: https://www.linkedin.com/in/jay-parmar-598a03244
